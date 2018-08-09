@@ -1,0 +1,15 @@
+server:
+  port: 9000
+
+security:
+  oauth2:
+    client:
+      client-id: springboot
+      client-secret: springboot
+      authorized-grant-types:
+        - authoriszation_code
+        - refresh_token
+        - password
+        - client_credentials
+      scope:
+        - "panels:read"
