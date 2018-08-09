@@ -31,7 +31,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             .withClient("panel-admin-ui")
                 .secret("{noop}panel-admin-ui-secret")
                 .authorizedGrantTypes("authorization_code", "refresh_token", "client_credentials", "password")
-                .scopes("panel:read", "panel:write");
+                .scopes("panel:read", "panel:write", "member:read", "member:write");
     }
 
     @Override
