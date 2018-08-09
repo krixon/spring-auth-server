@@ -11,36 +11,40 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-
+public class AuthServerConfig extends AuthorizationServerConfigurerAdapter
+{
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Override
-    public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-
+    public void configure(final ClientDetailsServiceConfigurer clients) throws Exception
+    {
         clients.inMemory()
             .withClient("panel-service")
                 .secret("{noop}panel-service-secret")
                 .authorizedGrantTypes("client_credentials")
-                .and()
+            .and()
             .withClient("member-service")
                 .secret("{noop}member-service-secret")
                 .authorizedGrantTypes("client_credentials")
-                .and()
+            .and()
             .withClient("panel-admin-ui")
                 .secret("{noop}panel-admin-ui-secret")
                 .authorizedGrantTypes("authorization_code", "refresh_token", "client_credentials", "password")
-                .scopes("panel:read", "panel:write", "member:read", "member:write");
+                .scopes("panel:read", "panel:write", "member:read", "member:write")
+//                .autoApprove(true)
+                .redirectUris("http://localhost:10000/login");
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception
+    {
         endpoints.authenticationManager(authenticationManager);
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception
+    {
         security
             .tokenKeyAccess("permitAll()")
             .checkTokenAccess("isAuthenticated()")
